@@ -10,16 +10,18 @@
 
 LedControl lc=LedControl(DATAIN,CLK,LOAD, NUM_MTRX);
 unsigned long delayTime=500;
-
+unsigned long previousMillis = 0;
 const byte CENTERED[8] =  {B00000000,B00111100,B01111110,B01100110,B01100110,B01111110,B00111100,B00000000};
 const byte RIGHT[8] =     {B00000000,B00111100,B01111110,B01110010,B01110010,B01111110,B00111100,B00000000};
 const byte LEFT[8] =      {B00000000,B00111100,B01111110,B01001110,B01001110,B01111110,B00111100,B00000000};
 const byte CLOSED[8] =    {B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00111100,B00000000};
 const byte DOLLAR[8] =    {B00011000,B00111110,B01100000,B00111100,B00000110,B01111100,B00011000,B00000000};
+const byte DOLLAR_DOWN[8] = {B0000000,B00011000,B00111110,B01100000,B00111100,B00000110,B01111100,B00011000};
 const byte HAPPY[8] =     {B00000000,B00011000,B00111100,B01100110,B11000011,B00000000,B00000000,B00000000};
 const byte SAD_DOWN[8] =  {B00000000,B00000000,B00111100,B01111110,B01111110,B01100110,B01100110,B00111100};
 const byte SAD_RIGHT[8] = {B00000000,B00000000,B00111100,B01111110,B01111110,B01110010,B01110010,B00111100};
 const byte SAD_LEFT[8] =  {B00000000,B00000000,B00111100,B01111110,B01111110,B01001110,B01001110,B00111100};
+
 void setup() {
   Serial.begin (9600);
   Serial.println("Matrix setup done");
@@ -35,11 +37,8 @@ void setup() {
 
 void loop() { 
   
-  normal();
-  sad();
-  delay(2000);
 
-
+  cash();
   
 } // ()
 
@@ -65,7 +64,7 @@ void closeEyes() {
 
 void openEyes() {
   Serial.println("Opening eyes");
-  for (int i = 8; i >= 0; i--) {
+  for (int i = 8; i > 0; i--) {
     lc.setRow(0,i,CENTERED[i]);
     delay(50);
   } // for
@@ -133,4 +132,17 @@ void sad() { // TODO for 4 seconds with millis() and while
     lc.setRow(0,i,SAD_RIGHT[i]);
   } // for
   delay(200);
+} // ()
+
+void cash() { // ISSUE IN THE SECOND MATRIX, LAST LINE DOESN'T WORK PROPERLY
+  Serial.print("Cash cash cash!! $$$$$");
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,DOLLAR[i]);
+  } // for
+  delay(500);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,DOLLAR_DOWN[i]);
+  } // for
+  delay(500);
+  
 } // ()
