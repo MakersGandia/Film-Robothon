@@ -5,14 +5,13 @@
 #include <Servo.h>
 Thread myThread = Thread();
 Servo myservo;  // create servo object to control a servo
-int e = 0;
-// Definimos los pines donde tenemos conectadas las bobinas
+
 #define IN1  8
 #define IN2  9
 #define IN3  10
 #define IN4  11
 
-// Secuencia de pasos (par máximo)
+
 int paso [4][4] =
 {
   {1, 1, 0, 0},
@@ -41,8 +40,8 @@ void setup() {
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
+  
   myservo.attach(7);  // attaches the servo on pin 9 to the servo object
-
 
   myThread.onRun(niceCallback);
   myThread.setInterval(0);
@@ -54,13 +53,9 @@ void loop() {
     myThread.run();
 
   // Other code...
-  if (true) {
 
-Serial.println("funciona");
-
-  }
-  //  myservo.write(0);                  // sets the servo position according to the scaled value
-  //  delay(1000);                           // waits for the servo to get there
-  //  myservo.write(360);                  // sets the servo position according to the scaled value
-  //  delay(1000);
+    myservo.write(0);                  // sets the servo position according to the scaled value
+    delay(10);                           // waits for the servo to get there
+    myservo.write(180);                  // sets the servo position according to the scaled value
+    delay(10);
 }
