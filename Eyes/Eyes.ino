@@ -27,6 +27,7 @@ byte frames[] [8] = {
 byte centred[8] = {B00000000,B00111100,B01111110,B01100110,B01100110,B01111110,B00111100,B00000000};
 byte right[8] = {B00000000,B00111100,B01111110,B01110010,B01110010,B01111110,B00111100,B00000000};
 byte left[8] = {B00000000,B00111100,B01111110,B01001110,B01001110,B01111110,B00111100,B00000000};
+byte closed[8] = {B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00111100,B00000000};
 
 void setup() {
   Serial.begin (9600);
@@ -44,44 +45,46 @@ void setup() {
  
 void loop() { 
   start();
-  delay(delayTime);
-  lookRight();
-  delay(delayTime);
-  start();
-  delay(delayTime);
-  lookLeft();
-  delay(delayTime);
+  delay(10000);
+  robotBlink();
   
-  /*while (a < 8) {
-    lc.setRow(0,0,frames[a][0]);
-    lc.setRow(0,1,frames[a][1]);
-    lc.setRow(0,2,frames[a][2]);
-    lc.setRow(0,3,frames[a][3]);
-    lc.setRow(0,4,frames[a][4]);
-    lc.setRow(0,5,frames[a][5]);
-    lc.setRow(0,6,frames[a][6]);
-    lc.setRow(0,7,frames[a][7]);
-    lc.setRow(0,8,frames[a][8]);
-    a++;
-    delay(delayTime);
-  } // while
-    a = 0;*/
+  
 } // ()
 
 void start() {
+  Serial.println("Eyes centered");
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,centred[i]);
   } // for
 } // ()
 
 void lookRight() {
+  Serial.println("Eyes looking right");
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,right[i]);
   } // for
 } // ()
 
 void lookLeft() {
-    for (int i = 0; i < 8; i++) {
+  Serial.println("Eyes looking left");
+  for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,left[i]);
   } // for
+} // ()
+
+void robotBlink() {
+  Serial.println("Robot blinking");
+  for (int i = 0; i < 7; i++) {
+    lc.setRow(0,i,B00000000);
+    delay(50);
+  } // for
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,closed[i]);
+  } // for
+  delay(100);
+  for (int i = 8; i > 0; i--) {
+    lc.setRow(0,i,centred[i]);
+    delay(50);
+  } // for
+    
 } // ()
