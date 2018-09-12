@@ -11,12 +11,13 @@
 LedControl lc=LedControl(DATAIN,CLK,LOAD, NUM_MTRX);
 unsigned long delayTime=500;
 
-byte centered[8] = {B00000000,B00111100,B01111110,B01100110,B01100110,B01111110,B00111100,B00000000};
-byte right[8] = {B00000000,B00111100,B01111110,B01110010,B01110010,B01111110,B00111100,B00000000};
-byte left[8] = {B00000000,B00111100,B01111110,B01001110,B01001110,B01111110,B00111100,B00000000};
-byte closed[8] = {B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00111100,B00000000};
-byte dollar[8] = {B00011000,B00111110,B01100000,B00111100,B00000110,B01111100,B00011000,B00000000};
-byte happy[8] = {B00000000,B00011000,B00111100,B01100110,B11000011,B00000000,B00000000,B00000000};
+const byte CENTERED[8] = {B00000000,B00111100,B01111110,B01100110,B01100110,B01111110,B00111100,B00000000};
+const byte RIGHT[8] = {B00000000,B00111100,B01111110,B01110010,B01110010,B01111110,B00111100,B00000000};
+const byte LEFT[8] = {B00000000,B00111100,B01111110,B01001110,B01001110,B01111110,B00111100,B00000000};
+const byte CLOSED[8] = {B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00111100,B00000000};
+const byte DOLLAR[8] = {B00011000,B00111110,B01100000,B00111100,B00000110,B01111100,B00011000,B00000000};
+const byte HAPPY[8] = {B00000000,B00011000,B00111100,B01100110,B11000011,B00000000,B00000000,B00000000};
+const byte SAD[8] = {B00000000,B00000000,B00111100,B01111110,B01111110,B01100110,B01100110,B00111100};
 
 void setup() {
   Serial.begin (9600);
@@ -27,14 +28,18 @@ void setup() {
     lc.clearDisplay(i);
   } // for
 
-   //start();
+   start();
    
 } // ()
 
  
 void loop() { 
   
+  normal();
   smile();
+  delay(2000);
+  sad();
+  delay(2000);
 
   
 } // ()
@@ -42,11 +47,11 @@ void loop() {
 void start() {
  Serial.print("Waking up");
  for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,closed[i]);
+    lc.setRow(0,i,CLOSED[i]);
   } // for
   delay(1000);
   for (int i = 8; i >= 0; i--) {
-    lc.setRow(0,i,centered[i]);
+    lc.setRow(0,i,CENTERED[i]);
     delay(50);
   } // for
 } // ()
@@ -54,7 +59,7 @@ void start() {
 void closeEyes() {
   Serial.print("Closing eyes");
   for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,closed[i]);
+    lc.setRow(0,i,CLOSED[i]);
     delay(50);
   } // for
 } // ()
@@ -62,7 +67,7 @@ void closeEyes() {
 void openEyes() {
   Serial.println("Opening eyes");
   for (int i = 8; i >= 0; i--) {
-    lc.setRow(0,i,centered[i]);
+    lc.setRow(0,i,CENTERED[i]);
     delay(50);
   } // for
 } // ()
@@ -70,7 +75,7 @@ void openEyes() {
 void normal() {
   Serial.println("Eyes centered");
   for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,centered[i]);
+    lc.setRow(0,i,CENTERED[i]);
   } // for
   delay(5000);
   robotBlink();
@@ -80,14 +85,14 @@ void normal() {
 void lookRight() {
   Serial.println("Eyes looking right");
   for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,right[i]);
+    lc.setRow(0,i,RIGHT[i]);
   } // for
 } // ()
 
 void lookLeft() {
   Serial.println("Eyes looking left");
   for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,left[i]);
+    lc.setRow(0,i,LEFT[i]);
   } // for
 } // ()
 
@@ -98,14 +103,21 @@ void robotBlink() {
   openEyes();
 } // ()
 
-void smile() { // TODO for 4 seconds with millis()
-  Serial.println("Robot happy");
+void smile() { // TODO for 4 seconds with millis() and while
+  Serial.println("Robot happy!");
   for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,happy[i]);
+    lc.setRow(0,i,HAPPY[i]);
   } // for
   delay(200);
   for (int i = 1; i < 8; i++) {
-    lc.setRow(0,i-1,happy[i]);
+    lc.setRow(0,i-1,HAPPY[i]);
   } // for
   delay(200);
+} // ()
+
+void sad() {
+  Serial.println("Robot sad...");
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,SAD[i]);
+  } // for
 } // ()
