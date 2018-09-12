@@ -38,12 +38,19 @@ void setup() {
 void loop() { 
   
 
-  cash();
+  defaultEye();
+  smile();
+  smile();
+  delay(1000);
+  sad();
+  delay(100);
+  sad();
+  delay(1000);
   
 } // ()
 
 void start() {
- Serial.print("Waking up");
+ Serial.println("Waking up");
  for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,CLOSED[i]);
   } // for
@@ -60,13 +67,13 @@ void defaultEye() {
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,CENTERED[i]);
   } // for
-  delay(5000);
+  delay(3000);
   robotBlink();
   robotBlink();
 } // ()
 
 void closeEyes() {
-  Serial.print("Closing eyes");
+  Serial.println("Closing eyes");
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,CLOSED[i]);
     delay(50);
@@ -102,10 +109,13 @@ void robotBlink() {
   closeEyes();
   delay(100);
   openEyes();
+  delay(100);
 } // ()
 
 void smile() { // TODO for 4 seconds with millis() and while
   Serial.println("Robot happy!");
+  int times = 0;
+  while(times < 4) {
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,HAPPY[i]);
   } // for
@@ -114,9 +124,13 @@ void smile() { // TODO for 4 seconds with millis() and while
     lc.setRow(0,i-1,HAPPY[i]);
   } // for
   delay(200);
+  times++;
+  } // while
 } // ()
 
 void sad() { // TODO for 4 seconds with millis() and while
+  int times = 0;
+  while(times < 4) {
   Serial.println("Robot sad...");
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,SAD_DOWN[i]);
@@ -134,6 +148,8 @@ void sad() { // TODO for 4 seconds with millis() and while
     lc.setRow(0,i,SAD_RIGHT[i]);
   } // for
   delay(200);
+  times++;
+  } // while
 } // ()
 
 void cash() { // ISSUE IN THE SECOND MATRIX, LAST LINE DOESN'T WORK PROPERLY
