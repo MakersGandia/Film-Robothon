@@ -54,6 +54,17 @@ void start() {
   } // for
 } // ()
 
+void defaultEye() {
+  Serial.println("Eyes centered");
+  lc.clearDisplay(0);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,CENTERED[i]);
+  } // for
+  delay(5000);
+  robotBlink();
+  robotBlink();
+} // ()
+
 void closeEyes() {
   Serial.print("Closing eyes");
   for (int i = 0; i < 8; i++) {
@@ -70,25 +81,16 @@ void openEyes() {
   } // for
 } // ()
 
-void normal() {
-  Serial.println("Eyes centered");
-  lc.clearDisplay(0);
-  for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,CENTERED[i]);
-  } // for
-  delay(5000);
-  robotBlink();
-  robotBlink();
-} // ()
 
-void lookRight() {
+
+void lookRight() { // while turning right
   Serial.println("Eyes looking right");
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,RIGHT[i]);
   } // for
 } // ()
 
-void lookLeft() {
+void lookLeft() { // while turning left
   Serial.println("Eyes looking left");
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,LEFT[i]);
