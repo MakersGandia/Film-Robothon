@@ -1,3 +1,6 @@
+/*
+@author Ricardo Escandell (UPV)
+*/
 #include "LedControlMS.h"
 
 #define NUM_MTRX 1 //Number of devices connected to the Arduino
