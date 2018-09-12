@@ -1,10 +1,16 @@
 #include <Thread.h>
 #include <StaticThreadController.h>
-#include <Thread.h>
 #include <ThreadController.h>
 #include <Servo.h>
-Thread myThread = Thread();
+
+ThreadController controll = ThreadController();
+
+Thread* myThread = new Thread();
+
 Servo myservo;  // create servo object to control a servo
+
+Thread anotherThread = Thread();
+
 
 #define IN1  8
 #define IN2  9
@@ -34,28 +40,38 @@ void niceCallback() {
   }
 }
 
+void anotherNiceCallback() {
+  for (int i = 0; i < 4; i++)
+  {
+
+    myservo.write(0);                  // sets the servo position according to the scaled value
+    delay(10);                           // waits for the servo to get there
+    myservo.write(180);                  // sets the servo position according to the scaled value
+    delay(10);
+
+  }
+}
+
 void setup() {
   Serial.begin(9600);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
-  
+
   myservo.attach(7);  // attaches the servo on pin 9 to the servo object
 
-  myThread.onRun(niceCallback);
-  myThread.setInterval(0);
+  myThread->onRun(niceCallback);
+  myThread->setInterval(100);
+
+  anotherThread.onRun(anotherNiceCallback);
+  anotherThread.setInterval(0);
+
+  controll.add(myThread);
+  controll.add(&anotherThread); // & to pass the pointer to it
 }
 
 void loop() {
-  // checks if thread should run
-  if (myThread.shouldRun())
-    myThread.run();
 
-  // Other code...
-
-    myservo.write(0);                  // sets the servo position according to the scaled value
-    delay(10);                           // waits for the servo to get there
-    myservo.write(180);                  // sets the servo position according to the scaled value
-    delay(10);
+  controll.run();
 }
