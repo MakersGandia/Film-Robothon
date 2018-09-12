@@ -1,15 +1,11 @@
 #include <Thread.h>
-int ledPin = 13;
-int i =0;
-//My simple Thread
-Thread myThread = Thread();
 #include <StaticThreadController.h>
 #include <Thread.h>
 #include <ThreadController.h>
 #include <Servo.h>
-
+Thread myThread = Thread();
 Servo myservo;  // create servo object to control a servo
-
+int e = 0;
 // Definimos los pines donde tenemos conectadas las bobinas
 #define IN1  8
 #define IN2  9
@@ -26,19 +22,20 @@ int paso [4][4] =
 };
 
 // callback for myThread
-void niceCallback(){
+void niceCallback() {
   for (int i = 0; i < 4; i++)
   {
-    // waits for the servo to get there
+
     digitalWrite(IN1, paso[i][0]);
     digitalWrite(IN2, paso[i][1]);
     digitalWrite(IN3, paso[i][2]);
     digitalWrite(IN4, paso[i][3]);
     delay(10);
+
   }
 }
 
-void setup(){
+void setup() {
   Serial.begin(9600);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -48,17 +45,22 @@ void setup(){
 
 
   myThread.onRun(niceCallback);
-  myThread.setInterval(500);
+  myThread.setInterval(0);
 }
 
-void loop(){
+void loop() {
   // checks if thread should run
-  if(myThread.shouldRun())
+  if (myThread.shouldRun())
     myThread.run();
 
   // Other code...
-  myservo.write(0);                  // sets the servo position according to the scaled value
-  delay(1000);                           // waits for the servo to get there
-  myservo.write(360);                  // sets the servo position according to the scaled value
-  delay(1000);
+  if (true) {
+
+Serial.println("funciona");
+
+  }
+  //  myservo.write(0);                  // sets the servo position according to the scaled value
+  //  delay(1000);                           // waits for the servo to get there
+  //  myservo.write(360);                  // sets the servo position according to the scaled value
+  //  delay(1000);
 }
