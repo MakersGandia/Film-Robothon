@@ -11,7 +11,7 @@
 LedControl lc=LedControl(DATAIN,CLK,LOAD, NUM_MTRX);
 unsigned long delayTime=500;
 
-byte centred[8] = {B00000000,B00111100,B01111110,B01100110,B01100110,B01111110,B00111100,B00000000};
+byte centered[8] = {B00000000,B00111100,B01111110,B01100110,B01100110,B01111110,B00111100,B00000000};
 byte right[8] = {B00000000,B00111100,B01111110,B01110010,B01110010,B01111110,B00111100,B00000000};
 byte left[8] = {B00000000,B00111100,B01111110,B01001110,B01001110,B01111110,B00111100,B00000000};
 byte closed[8] = {B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00111100,B00000000};
@@ -31,9 +31,10 @@ void setup() {
 
  
 void loop() { 
-  start();
-  delay(10000);
+  
+  delay(5000);
   robotBlink();
+  
   
   
 } // ()
@@ -41,8 +42,9 @@ void loop() {
 void start() {
   Serial.println("Eyes centered");
   for (int i = 0; i < 8; i++) {
-    lc.setRow(0,i,centred[i]);
+    lc.setRow(0,i,centered[i]);
   } // for
+  
 } // ()
 
 void lookRight() {
@@ -61,16 +63,13 @@ void lookLeft() {
 
 void robotBlink() {
   Serial.println("Robot blinking");
-  for (int i = 0; i < 7; i++) {
-    lc.setRow(0,i,B00000000);
-    delay(50);
-  } // for
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,closed[i]);
+    delay(50);
   } // for
   delay(100);
-  for (int i = 8; i > 0; i--) {
-    lc.setRow(0,i,centred[i]);
+  for (int i = 8; i >= 0; i--) {
+    lc.setRow(0,i,centered[i]);
     delay(50);
   } // for
     
