@@ -4,8 +4,8 @@
 #include "LedControlMS.h"
 
 #define NUM_MTRX 1 //Number of devices connected to the Arduino
-#define DATAIN 7
-#define CLK 2
+#define DATAIN 8
+#define CLK 9
 #define LOAD 10 // CS pin
 
 LedControl lc=LedControl(DATAIN,CLK,LOAD, NUM_MTRX);
