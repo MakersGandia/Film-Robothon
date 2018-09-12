@@ -16,6 +16,7 @@ byte right[8] = {B00000000,B00111100,B01111110,B01110010,B01110010,B01111110,B00
 byte left[8] = {B00000000,B00111100,B01111110,B01001110,B01001110,B01111110,B00111100,B00000000};
 byte closed[8] = {B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00111100,B00000000};
 byte dollar[8] = {B00011000,B00111110,B01100000,B00111100,B00000110,B01111100,B00011000,B00000000};
+byte happy[8] = {B00000000,B00011000,B00111100,B01100110,B11000011,B00000000,B00000000,B00000000};
 
 void setup() {
   Serial.begin (9600);
@@ -26,14 +27,15 @@ void setup() {
     lc.clearDisplay(i);
   } // for
 
-   start();
+   //start();
    
 } // ()
 
  
 void loop() { 
   
-  normal();
+  smile();
+
   
 } // ()
 
@@ -94,4 +96,16 @@ void robotBlink() {
   closeEyes();
   delay(100);
   openEyes();
+} // ()
+
+void smile() { // TODO for 4 seconds with millis()
+  Serial.println("Robot happy");
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,happy[i]);
+  } // for
+  delay(200);
+  for (int i = 1; i < 8; i++) {
+    lc.setRow(0,i-1,happy[i]);
+  } // for
+  delay(200);
 } // ()
