@@ -1,3 +1,13 @@
+
+//include
+#include <Thread.h>
+#include <StaticThreadController.h>
+#include <ThreadController.h>
+#include <Servo.h>
+#include <AFMotor.h>
+//end include
+
+
 /*Pinout
    Led Matrix = 8,9,10
    Lcd Display = 2,3,4,5,6,7
@@ -5,16 +15,16 @@
    Hopter = 12
 */
 
-//include
-#include <Thread.h>
-#include <StaticThreadController.h>
-#include <ThreadController.h>
-#include <Servo.h>
-//end include
 
 //var
 
-//threadVar
+//Motor Var
+
+
+
+//end Motor Var
+
+//thread Var
 ThreadController controll = ThreadController();
 
 Thread* myThread = new Thread();
@@ -28,6 +38,12 @@ Servo myservo;  // create servo object to control a servo
 //end var
 
 //methods
+
+//Motor methods
+
+
+
+//end Motor methods
 
 //Thread methods
 void niceCallback() {
@@ -43,10 +59,7 @@ void anotherNiceCallback() {
   for (int i = 0; i < 4; i++)
   {
 
-    myservo.write(0);                  // sets the servo position according to the scaled value
-    delay(10);                           // waits for the servo to get there
-    myservo.write(180);                  // sets the servo position according to the scaled value
-    delay(10);
+ //other things
 
   }
 }
