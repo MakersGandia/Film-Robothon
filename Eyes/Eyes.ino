@@ -4,8 +4,8 @@
 #include "LedControlMS.h"
 
 #define NUM_MTRX 1 //Number of devices connected to the Arduino
-#define DATAIN 8
-#define CLK 9
+#define DATAIN 12
+#define CLK 11
 #define LOAD 10 // CS pin
 
 LedControl lc=LedControl(DATAIN,CLK,LOAD, NUM_MTRX);
@@ -21,6 +21,14 @@ const byte HAPPY[8] =     {B00000000,B00011000,B00111100,B01100110,B11000011,B00
 const byte SAD_DOWN[8] =  {B00000000,B00000000,B00111100,B01111110,B01111110,B01100110,B01100110,B00111100};
 const byte SAD_RIGHT[8] = {B00000000,B00000000,B00111100,B01111110,B01111110,B01110010,B01110010,B00111100};
 const byte SAD_LEFT[8] =  {B00000000,B00000000,B00111100,B01111110,B01111110,B01001110,B01001110,B00111100};
+
+
+const byte HEART_0[8] = {B00000000,B00000000,B00000000,B00000000,B00011000,B00011000,B00000000,B00000000};
+const byte HEART_1[8] = {B00000000,B00000000,B00000000,B00011000,B00111100,B00111100,B00011000,B00000000};
+const byte HEART_2[8] = {B00000000,B00000000,B01100110,B11111111,B11111111,B01111111,B00111100,B00011000};
+const byte HEART_3[8] = {B00000000,B01100110,B11111111,B11111111,B01111110,B00111100,B00011000,B00000000};
+const byte HEART_4[8] = {B01100110,B11111111,B11111111,B01111110,B00111100,B00011000,B00000000,B00000000};
+
 
 void setup() {
   Serial.begin (9600);
@@ -38,13 +46,17 @@ void setup() {
 void loop() { 
   
 
-  defaultEye();
+ /* defaultEye();
   smile();
   smile();
   delay(1000);
   sad();
   delay(100);
   sad();
+  delay(1000);*/
+  love();
+  delay(200);
+  love();
   delay(1000);
   
 } // ()
@@ -153,7 +165,7 @@ void sad() { // TODO for 4 seconds with millis() and while
 } // ()
 
 void cash() { // ISSUE IN THE SECOND MATRIX, LAST LINE DOESN'T WORK PROPERLY
-  Serial.print("Cash cash cash!! $$$$$");
+  Serial.println("Cash cash cash!! $$$$$");
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,DOLLAR[i]);
   } // for
@@ -163,4 +175,29 @@ void cash() { // ISSUE IN THE SECOND MATRIX, LAST LINE DOESN'T WORK PROPERLY
   } // for
   delay(500);
   
+} // ()
+
+void love() {
+  Serial.println("LOOOOVE");
+   for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,HEART_0[i]);
+  } // for
+  delay(50);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,HEART_1[i]);
+  } // for
+  delay(50);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,HEART_2[i]);
+  } // for
+  delay(50);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,HEART_3[i]);
+  } // for
+  delay(50);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,HEART_4[i]);
+  } // for
+  delay(50);
+
 } // ()
