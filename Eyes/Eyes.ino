@@ -42,14 +42,14 @@ void setup() {
     lc.clearDisplay(i);
   } // for
 
-   //start();
+   start();
    
 } // ()
 
 void loop() { 
   
 
-  /*defaultEye();
+  defaultEye();
   smile();
   smile();
   delay(1000);
@@ -62,7 +62,7 @@ void loop() {
   love();
   delay(1000);
   newLife();
-  delay(100);*/
+  delay(100);
   angry();
   delay(100);
   

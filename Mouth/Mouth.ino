@@ -1,54 +1,23 @@
-#include <LiquidCrystal.h>
+const int latchPin = 5;  // Pin conectado al Pin 12 del 74HC595 (Latch)
+const int dataPin  = 6;  // Pin conectado al Pin 14 del 74HC595 (Data)
+const int clockPin = 7; // Pin conectado al Pin 11 del 74HC595 (Clock)
+int i =0;
+                      
+//const byte numeros[8] = {B10000000,B01000000,B00100000,B00010000,B00001000,B00000100,B00000010,B00000001};
+const byte closedMouth = B00111010;
+const byte openedMouth = B11111100;
 
-#define COLS 16
-#define ROWS 12
-
-
-LiquidCrystal lcd(7,6,5,4,3,2);
-
-void setup() {
+                      
+void setup() { 
   Serial.begin(9600);
-  lcd.begin(COLS,ROWS);
-
+  pinMode(latchPin, OUTPUT);
+  pinMode(clockPin, OUTPUT);
+  pinMode(dataPin, OUTPUT); 
 }
 
 void loop() {
-  lcd.clear();
-  lcd.setCursor(0,0);
-  defaultMouth();
-}
-
-void defaultMouth() {
-  byte defaultMouthArray[8] = {B11111,B11111,B11111,B11111,B11111,B11111,B11111,B11111};
-   
-  lcd.createChar(0, defaultMouthArray);
-
-  // Upper col
-  lcd.setCursor(5,0);
-  lcd.write(byte(0));
-  /*lcd.setCursor(6,0);
-  lcd.write(byte(0));
-  lcd.setCursor(7,0);
-  lcd.write(byte(0));
-  lcd.setCursor(8,0);
-  lcd.write(byte(0));
-  lcd.setCursor(9,0);
-  lcd.write(byte(0));*/
-  lcd.setCursor(10,0);
-  lcd.write(byte(0));
-
-  // Lower Row
-  lcd.setCursor(5,1);
-  lcd.write(byte(0));
-  lcd.setCursor(6,1);
-  lcd.write(byte(0));
-  lcd.setCursor(7,1);
-  lcd.write(byte(0));
-  lcd.setCursor(8,1);
-  lcd.write(byte(0));
-  lcd.setCursor(9,1);
-  lcd.write(byte(0));
-  lcd.setCursor(10,1);
-  lcd.write(byte(0));
-
+    delay(1000);
+    digitalWrite(latchPin, LOW);
+    shiftOut(dataPin, clockPin, LSBFIRST, closedMouth);
+    digitalWrite(latchPin, HIGH);
 } // ()
