@@ -85,7 +85,7 @@ void loop() {
   delay(100);*/
 
   defaultEye();
-  delay(200);
+  delay(500);
   loading();
   delay(100);
   loading();
@@ -120,6 +120,10 @@ void defaultEye() {
   delay(3000);
   robotBlink();
   robotBlink();
+  delay(2);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,CENTERED[i]);
+  } // for
 } // ()
 
 void closeEyes() {
@@ -127,6 +131,14 @@ void closeEyes() {
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,CLOSED[i]);
     delay(50);
+  } // for
+} // ()
+
+void closeEyesDeath() {
+  Serial.println("Closing eyes");
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,CLOSED[i]);
+    delay(100);
   } // for
 } // ()
 
@@ -289,9 +301,9 @@ void shutDown() {
   } // for
   for(int i = 8; i > 0; i--) {
     lc.setIntensity(0,i);
-    delay(250);
+    delay(350);
   } // for
-  closeEyes();
+  closeEyesDeath();
   delay(500);
   for (int i = 0; i < 8; i++) {
     lc.setRow(0,i,EMPTY[i]);
