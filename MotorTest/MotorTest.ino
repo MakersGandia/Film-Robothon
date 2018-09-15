@@ -9,10 +9,10 @@ AF_DCMotor motor4(4);
 void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
 
-  motor1.setSpeed(255);//backward/left
-  motor2.setSpeed(255);//backward/right
-  motor3.setSpeed(255);//forward/right
-  motor4.setSpeed(255);//forward/left
+  motor1.setSpeed(255); //back/left
+  motor2.setSpeed(255); //back/right
+  motor3.setSpeed(255); //front/right
+  motor4.setSpeed(255); //front/left
 
   motor1.run(RELEASE);
   motor2.run(RELEASE);
@@ -77,8 +77,6 @@ void accelerate(int x) {
 }
 
 void loop() {
-
-
 
   accelerate(x);
 }
