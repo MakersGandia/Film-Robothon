@@ -33,6 +33,8 @@ const byte HEART_1[8] =     {B00000000,B00000000,B00000000,B00011000,B00111100,B
 const byte HEART_2[8] =     {B00000000,B00000000,B01100110,B11111111,B11111111,B01111111,B00111100,B00011000};
 const byte HEART_3[8] =     {B00000000,B01100110,B11111111,B11111111,B01111110,B00111100,B00011000,B00000000};
 const byte HEART_4[8] =     {B01100110,B11111111,B11111111,B01111110,B00111100,B00011000,B00000000,B00000000};
+const byte LOADING_1[8] =   {B00000000,B00011000,B00011000,B01100110,B01100110,B00011000,B00011000,B00000000};
+const byte LOADING_2[8] =   {B00000000,B00110000,B00110110,B00000110,B01100000,B01101100,B00001100,B00000000};
 
 
 void setup() {
@@ -44,14 +46,14 @@ void setup() {
   } // for
   Serial.println("Matrix setup done");
 
-   start();
+   //start();
    
 } // ()
 
 void loop() { 
   
 
-  defaultEye();
+  /*defaultEye();
   smile();
   smile();
   delay(1000);
@@ -66,7 +68,34 @@ void loop() {
   newLife();
   delay(100);
   angry();
+  delay(100);*/
+  
+  
+  /*loading();
   delay(100);
+  loading();
+  delay(100);
+  loading();
+  delay(100);
+  loading();
+  delay(100);
+  loading();
+  delay(100);
+  loading();
+  delay(100);*/
+
+  defaultEye();
+  delay(200);
+  loading();
+  delay(100);
+  loading();
+  delay(100);
+  loading();
+  delay(100);
+  loading();
+  delay(100);
+  shutDown();
+  delay(1500000);
   
 } // ()
 
@@ -240,4 +269,38 @@ void angry() {
     lc.setRow(0,i,ANGRY_2[i]);
   } // for
   delay(100);
+} // ()
+
+void loading() {
+  for (int i = 0; i<8; i++) {
+    lc.setRow(0,i,LOADING_1[i]);
+  } // for
+  delay(500);
+  for (int i = 0; i<8; i++) {
+    lc.setRow(0,i,LOADING_2[i]);
+  } // for
+  delay(500);
+} // ()
+
+void shutDown() {
+  int x = 8;
+  lc.setIntensity(0,x);
+  for (int i = 0; i < 8; i ++) {
+      lc.setRow(0,i,EMPTY[i]);
+    } // for
+    delay(500);
+  while (x > 0) {
+    for (int i = 0; i < 8; i++) {
+      lc.setRow(0,i,CENTERED[i]);
+    } // for
+  lc.setIntensity(0,x);
+  delay(250);
+  x--;
+  } // while
+  delay(100);
+  closeEyes();
+  delay(50);
+  for (int i = 0; i < 8; i ++) {
+      lc.setRow(0,i,EMPTY[i]);
+    } // for
 } // ()
