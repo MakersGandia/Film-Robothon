@@ -41,7 +41,7 @@ void setup() {
   Serial.begin (9600); // Just to check in the console if the methods are executed properly
   for (int i=0; i < NUM_MTRX; i++){
     lc.shutdown(i,false); //It wakes up every device we have connected.
-    lc.setIntensity(i,1);
+    lc.setIntensity(i,8);
     lc.clearDisplay(i);
   } // for
   Serial.println("Matrix setup done");
@@ -95,7 +95,7 @@ void loop() {
   loading();
   delay(100);
   shutDown();
-  delay(1500000);
+  delay(30000);
   
 } // ()
 
@@ -283,24 +283,18 @@ void loading() {
 } // ()
 
 void shutDown() {
-  int x = 8;
-  lc.setIntensity(0,x);
-  for (int i = 0; i < 8; i ++) {
-      lc.setRow(0,i,EMPTY[i]);
-    } // for
-    delay(500);
-  while (x > 0) {
-    for (int i = 0; i < 8; i++) {
-      lc.setRow(0,i,CENTERED[i]);
-    } // for
-  lc.setIntensity(0,x);
-  delay(250);
-  x--;
-  } // while
-  delay(100);
+  lc.setIntensity(0,8);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,CENTERED[i]);
+  } // for
+  for(int i = 8; i > 0; i--) {
+    lc.setIntensity(0,i);
+    delay(250);
+  } // for
   closeEyes();
-  delay(50);
-  for (int i = 0; i < 8; i ++) {
-      lc.setRow(0,i,EMPTY[i]);
-    } // for
+  delay(500);
+  for (int i = 0; i < 8; i++) {
+    lc.setRow(0,i,EMPTY[i]);
+  } // for
+  
 } // ()
