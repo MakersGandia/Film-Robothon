@@ -11,6 +11,8 @@
 LedControl lc=LedControl(DATAIN,CLK,LOAD, NUM_MTRX);
 unsigned long delayTime=500;
 unsigned long previousMillis = 0;
+
+// Defining the sprite variables
 const byte EMPTY[8] =         {B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00000000,B00000000};
 const byte CENTERED[8] =      {B00000000,B00111100,B01111110,B01100110,B01100110,B01111110,B00111100,B00000000};
 const byte RIGHT[8] =         {B00000000,B00111100,B01111110,B01110010,B01110010,B01111110,B00111100,B00000000};
@@ -34,13 +36,13 @@ const byte HEART_4[8] =     {B01100110,B11111111,B11111111,B01111110,B00111100,B
 
 
 void setup() {
-  Serial.begin (9600);
-  Serial.println("Matrix setup done");
+  Serial.begin (9600); // Just to check in the console if the methods are executed properly
   for (int i=0; i < NUM_MTRX; i++){
     lc.shutdown(i,false); //It wakes up every device we have connected.
     lc.setIntensity(i,1);
     lc.clearDisplay(i);
   } // for
+  Serial.println("Matrix setup done");
 
    start();
    
